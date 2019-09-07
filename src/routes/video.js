@@ -10,7 +10,7 @@ router.get('/:videoId', (req, res) => {
     return res.send(req.context.models.video[req.params.videoId]);
 });
 
-routes I need
+// routes I need
 
 // get with etag match to see if it has changed
 //     if it has changed update that entry in the db via post
