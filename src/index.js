@@ -11,16 +11,16 @@ const app = express();
 
 app.use(cors());
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(async (req, res, next) => {
-  req.context = {
-    models,
-    me: await models.User.findByLogin('rwieruch'),
-  };
-  next();
-});
+// app.use(async (req, res, next) => {
+//   req.context = {
+//     models,
+//     me: await models.User.findByLogin('rwieruch'),
+//   };
+//   next();
+// });
 
 // Routes
 
@@ -41,6 +41,10 @@ app.use(async (req, res, next) => {
     console.log(`Example app listening on port ${process.env.PORT}!`),
   );
 // }); 
+
+app.get('/', (req, res) => {
+  res.send('Hello World!')
+})
 
 // const createUsersWithMessages = async () => {
 //   await models.User.create(
