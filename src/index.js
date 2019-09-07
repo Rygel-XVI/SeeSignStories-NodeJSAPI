@@ -2,6 +2,8 @@ import 'dotenv/config';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import express from 'express';
+import uuidv4 from 'uuid/v4';
+import routes from './routes'
 
 import models, { sequelize } from './models';
 
@@ -10,6 +12,8 @@ const app = express();
 // Application-Level Middleware
 
 app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({ extended: true }));
@@ -25,12 +29,26 @@ app.use(cors());
 // Routes
 
 // app.use('/session', routes.session);
-// app.use('/users', routes.user);
-// app.use('/messages', routes.message);
+app.use('/channel', routes.channel);
+app.use('/video', routes.video);
 
 // Start
 
 // const eraseDatabaseOnSync = true;
+
+app.get('/', (req, res) => {
+  return res.send('Received a GET HTTP method');
+});
+app.post('/', (req, res) => {
+  return res.send('Received a POST HTTP method');
+});
+app.put('/', (req, res) => {
+  return res.send('Received a PUT HTTP method');
+});
+app.delete('/', (req, res) => {
+  return res.send('Received a DELETE HTTP method');
+});
+
 
 // sequelize.sync({ force: eraseDatabaseOnSync }).then(async () => {
 //   if (eraseDatabaseOnSync) {
@@ -41,10 +59,6 @@ app.use(cors());
     console.log(`Example app listening on port ${process.env.PORT}!`),
   );
 // }); 
-
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
 
 // const createUsersWithMessages = async () => {
 //   await models.User.create(
