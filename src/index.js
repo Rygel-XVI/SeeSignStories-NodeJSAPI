@@ -26,15 +26,14 @@ app.use(express.urlencoded({ extended: true }));
 //   next();
 // });
 
+
 // Routes
 
-// app.use('/session', routes.session);
 app.use('/channel', routes.channel);
 app.use('/video', routes.video);
 
-// Start
 
-// const eraseDatabaseOnSync = true;
+const eraseDatabaseOnSync = true;
 
 app.get('/', (req, res) => {
   return res.send('Received a GET HTTP method');
@@ -50,45 +49,37 @@ app.delete('/', (req, res) => {
 });
 
 
-// sequelize.sync({ force: eraseDatabaseOnSync }).then(async () => {
-//   if (eraseDatabaseOnSync) {
-//     createUsersWithMessages();
-//   }
+sequelize.sync({ force: eraseDatabaseOnSync }).then(async () => {
+  if (eraseDatabaseOnSync) {
+    createChannelWithVideos();
+  }
 
   app.listen(process.env.PORT, () =>
     console.log(`Example app listening on port ${process.env.PORT}!`),
   );
-// }); 
+});
 
-// const createUsersWithMessages = async () => {
-//   await models.User.create(
-//     {
-//       username: 'rwieruch',
-//       messages: [
-//         {
-//           text: 'Published the Road to learn React',
-//         },
-//       ],
-//     },
-//     {
-//       include: [models.Message],
-//     },
-//   );
-
-//   await models.User.create(
-//     {
-//       username: 'ddavids',
-//       messages: [
-//         {
-//           text: 'Happy to release ...',
-//         },
-//         {
-//           text: 'Published a complete ...',
-//         },
-//       ],
-//     },
-//     {
-//       include: [models.Message],
-//     },
-//   );
-// };
+const createChannelWithVideos = async () => {
+  await models.Channel.create(
+    {
+      userName: "UserName",
+      eTag: "TSZMfrewi50",
+      channelId: "UCzm23K3jWedsp9SQejnOrpA",
+      videos: [
+        {
+          hostSite: "youtube#video",
+          videoId: "TSZMfrewi50",
+          eTag: "8jEFfXBrqiSrcF6Ee7MQuz8XuAM/ygmQfUw4qHv3xwWnUv-xrMsn6kg"
+        },
+        {
+          hostSite: "youtube#video",
+          videoId: "P97UBseVv7w",
+          eTag: "8jEFfXBrqiSrcF6Ee7MQuz8XuAM/EtCP-X0RtYhKiA5nKKxSS30yMrw"
+        },
+      ],
+    },
+    {
+      include: [models.Message],
+    },
+  )
+}
