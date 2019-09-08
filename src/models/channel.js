@@ -4,6 +4,7 @@ const channel = (sequelize, DataTypes) => {
   const Channel = sequelize.define('channel', {
     userName: DataTypes.STRING,
     eTag: DataTypes.STRING,
+    owner: DataTypes.STRING,
     channelId: {
       type: DataTypes.STRING,
       unique: true,
