@@ -1,9 +1,11 @@
 import 'dotenv/config';
 import cors from 'cors';
+import favicon from 'serve-favicon';
+import path from 'path';
 import bodyParser from 'body-parser';
 import express from 'express';
 
-import routes from './routes'
+import routes from './routes/index'
 import models, { sequelize } from './models';
 
 const app = express();
@@ -11,22 +13,35 @@ const app = express();
 // Application-Level Middleware
 
 app.use(cors());
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+
 app.use(async (req, res, next) => {
   req.context = {
-    models,
+    models
   };
+  // res.header("Access-Control-Allow-Origin", req.headers.origin);
+  // res.header("Access-Control-Allow-Headers", "x-requested-with, content-type");
+  // res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
+  // res.header("Access-Control-Allow-Credentials", "true");
+  // res.header("Access-Control-Max-Age", "1000000000");
+  
   next();
 });
-
 
 // Routes
 
 app.use('/channel', routes.channel);
 app.use('/video', routes.video);
 
+
+app.route('/events')
+  .all(function (req, res, next) {
+    // runs for all HTTP verbs first
+    // think of it as route specific middleware!
+  })
 
 const eraseDatabaseOnSync = true;
 

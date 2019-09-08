@@ -2,13 +2,15 @@ import { Router } from 'express';
 
 const router = Router();
 
+
 router.get('/', async (req, res) => {
     const channels = await req.context.models.Channel.findAll();
-    console.log(channels)
-    return res.send(users);
+    return res.json(channels);
 });
 
-router.get('/:channelId', (req, res) => {
+router.get('/:channelId', async (req, res) => {
+    const channels = await req.context.models.Channel.findAll();
+    debugger;
     return res.send(req.context.models.channel[req.params.channelId]);
 });
 

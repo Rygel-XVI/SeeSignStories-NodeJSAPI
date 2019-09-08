@@ -2,11 +2,14 @@ import { Router } from 'express';
 
 const router = Router();
 
-router.get('/', (req, res) => {
-    return res.send(Object.values(req.context.models.video));
+router.get('/', async (req, res) => {
+    const video = await req.context.models.Video.findAll()
+    return res.json(video);
 });
 
-router.get('/:videoId', (req, res) => {
+router.get('/:videoId', async (req, res) => {
+    const video = await req.context.models.Video.findAll()
+    debugger;
     return res.send(req.context.models.video[req.params.videoId]);
 });
 

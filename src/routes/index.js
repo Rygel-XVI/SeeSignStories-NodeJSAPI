@@ -3,5 +3,5 @@ import video from './video';
 
 export default {
   channel,
-  video
+  video,
 };
