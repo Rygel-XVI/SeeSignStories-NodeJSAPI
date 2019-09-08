@@ -21,13 +21,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(async (req, res, next) => {
   req.context = {
     models
-  };
-  // res.header("Access-Control-Allow-Origin", req.headers.origin);
-  // res.header("Access-Control-Allow-Headers", "x-requested-with, content-type");
-  // res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
-  // res.header("Access-Control-Allow-Credentials", "true");
-  // res.header("Access-Control-Max-Age", "1000000000");
-  
+  };  
   next();
 });
 
@@ -44,20 +38,6 @@ app.route('/events')
   })
 
 const eraseDatabaseOnSync = true;
-
-// app.get('/', (req, res) => {
-//   return res.send('Received a GET HTTP method');
-// });
-// app.post('/', (req, res) => {
-//   return res.send('Received a POST HTTP method');
-// });
-// app.put('/', (req, res) => {
-//   return res.send('Received a PUT HTTP method');
-// });
-// app.delete('/', (req, res) => {
-//   return res.send('Received a DELETE HTTP method');
-// });
-
 
 sequelize.sync({ force: eraseDatabaseOnSync }).then(async () => {
   if (eraseDatabaseOnSync) {
