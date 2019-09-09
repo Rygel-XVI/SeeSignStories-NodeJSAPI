@@ -5,6 +5,8 @@ import path from 'path';
 import bodyParser from 'body-parser';
 import express from 'express';
 
+import { seed } from './seeds'
+
 import routes from './routes/index'
 import models, { sequelize } from './models';
 
@@ -39,37 +41,13 @@ app.route('/events')
 
 const eraseDatabaseOnSync = true;
 
-sequelize.sync({ force: eraseDatabaseOnSync }).then(async () => {
-  if (eraseDatabaseOnSync) {
-    createChannelWithVideos();
-  }
-
+sequelize.sync({ force: eraseDatabaseOnSync }).then(() => {
+  // if (eraseDatabaseOnSync) {
+    // createChannelWithVideos();
+  // }
+  return seed()
+}).then(() => {
   app.listen(process.env.PORT, () =>
     console.log(`Example app listening on port ${process.env.PORT}!`),
   );
 });
-
-const createChannelWithVideos = async () => {
-  await models.Channel.create(
-    {
-      userName: "UserName",
-      eTag: "TSZMfrewi50",
-      channelId: "UCzm23K3jWedsp9SQejnOrpA",
-      videos: [
-        {
-          hostSite: "youtube#video",
-          videoId: "TSZMfrewi50",
-          eTag: "8jEFfXBrqiSrcF6Ee7MQuz8XuAM/ygmQfUw4qHv3xwWnUv-xrMsn6kg"
-        },
-        {
-          hostSite: "youtube#video",
-          videoId: "P97UBseVv7w",
-          eTag: "8jEFfXBrqiSrcF6Ee7MQuz8XuAM/EtCP-X0RtYhKiA5nKKxSS30yMrw"
-        },
-      ],
-    },
-    {
-      include: [models.Video],
-    },
-  )
-}

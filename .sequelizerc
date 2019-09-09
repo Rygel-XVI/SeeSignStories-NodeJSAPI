@@ -1,8 +1,9 @@
 const path = require('path');
+require('dotenv/config')
 
 module.exports = {
-  "config": path.resolve('./server/config', 'config.json'),
-  "models-path": path.resolve('./server/models'),
+  "config": path.resolve('./server/config', 'config.js'),
+  "models-path": path.resolve('./src/models'),
   "seeders-path": path.resolve('./server/seeders'),
   "migrations-path": path.resolve('./server/migrations')
 };

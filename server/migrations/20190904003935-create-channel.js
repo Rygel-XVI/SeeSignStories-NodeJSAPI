@@ -8,7 +8,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      userName: {
+      owner: {
         type: Sequelize.STRING
       },
       eTag: {
