@@ -4,6 +4,7 @@ import favicon from 'serve-favicon';
 import path from 'path';
 import bodyParser from 'body-parser';
 import express from 'express';
+import morgan from 'morgan';
 
 import { seed } from './seeds'
 
@@ -15,6 +16,8 @@ const app = express();
 // Application-Level Middleware
 
 app.use(cors());
+app.use(morgan('dev'));
+
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

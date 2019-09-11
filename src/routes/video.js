@@ -4,8 +4,10 @@ const router = Router();
 
 
 router.get('/', async (req, res) => {
-    const video = await req.context.models.Video.findAll()
-    return res.json(video);
+    req.context.models.Video.findAll()
+        .then((videos) => {
+            res.json({ videos })
+        }).catch((error) => console.log(error))
 });
 
 router.get('/:videoId', async (req, res) => {
